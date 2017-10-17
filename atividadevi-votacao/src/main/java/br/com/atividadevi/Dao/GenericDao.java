@@ -2,38 +2,29 @@ package br.com.atividadevi.Dao;
 
 import java.util.List;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.transaction.Transactional;
-import javax.ws.rs.Produces;
-import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.persistence.EntityManager;
+import javax.persistence.criteria.CriteriaQuery;
+
+import org.hibernate.Session;
 
 @Named("genericDao")
 public abstract class GenericDao<T>{
 	
-	private static final long serialVersionUID = 1L;
-	
-	
 	private Class<T> classe;
-
-	@Inject 
-	@PersistenceContext(name = "atividade_vi")
+ 
+	@Inject
 	public EntityManager em;
 	
-	@Inject
-	@Produces
+	public Session getSession(){
+		return (Session)em.getDelegate();
+		
+	}
 	protected EntityManager getEntityManager(){
 		return em;
 	}
-//	
-//	public GenericDao(EntityManager em, Class<T> classe){
-//		this.em = em;
-//		this.classe = classe;
-//	} 
-
+	
 	public GenericDao(Class<T> classe) {
 		this.classe = classe;
 	}
@@ -43,7 +34,7 @@ public abstract class GenericDao<T>{
 	}
 	
 	public void create(T t){
-		getEntityManager().persist(t);
+		getSession().save(t);
 	}
 	
 	public void close(){
