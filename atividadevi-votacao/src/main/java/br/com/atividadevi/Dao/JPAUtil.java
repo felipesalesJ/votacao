@@ -9,8 +9,9 @@ import javax.persistence.Persistence;
 
 public class JPAUtil {
 		
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("atividadevi-votacao");
-		
+	@PersistenceUnit(name = "atividadevi-votacao")
+	EntityManagerFactory emf ;		
+	
 	
 	@Produces
 	@RequestScoped
