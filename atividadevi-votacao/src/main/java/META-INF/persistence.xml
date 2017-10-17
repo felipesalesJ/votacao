@@ -3,19 +3,23 @@
 	<persistence-unit name="atividadevi-votacao">
 <!--  Implementação do JPA, no nosso caso Hibernate  -->
 		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+<!--  Aqui está a configuração JTA  -->
+		<jta-data-source>java:/orclDS</jta-data-source>
+
 <!--  Aqui são listadas todas as entidades  -->
-		<!--<class>br.com.atividadevi.Modelo.Candidato</class> -->
+		<class>br.com.atividadevi.Modelo.Candidato</class>
+
 		<class>br.com.atividadevi.Modelo.Pessoa</class>
-		<!--<class>br.com.atividadevi.Modelo.Eleitor</class> -->
-		<!--<class>br.com.atividadevi.Modelo.Telefone</class> -->
-		<!--<class>br.com.atividadevi.Modelo.Endereco</class> -->
-		<!--<class>br.com.atividadevi.Modelo.Voto</class> -->
-			<properties>
-<!--  Propriedades JDBC  -->
-				<property name="javax.persistence.jdbc.driver" value="oracle.jdbc.driver.OracleDriver"/>
-				<property name="javax.persistence.jdbc.url" value="jdbc:oracle:thin:@localhost:1521:orcl"/>
-				<property name="javax.persistence.jdbc.user" value="banco"/>
-				<property name="javax.persistence.jdbc.password" value="senha"/>
+	
+		<class>br.com.atividadevi.Modelo.Eleitor</class>
+
+		<class>br.com.atividadevi.Modelo.Telefone</class>
+
+		<class>br.com.atividadevi.Modelo.Endereco</class>
+
+		<class>br.com.atividadevi.Modelo.Voto</class>
+		<properties>
+
 <!--  Configurações específicas do Hibernate  -->
 				<property name="hibernate.connection.driver_class" value="org.jdbc.dialect.OracleDialect"/>
 				<property name="hibernate.hbm2ddl.auto" value="none"/>
