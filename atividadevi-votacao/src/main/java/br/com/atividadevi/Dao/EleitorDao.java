@@ -4,21 +4,21 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import br.com.atividadevi.Modelo.Pessoa;
+import br.com.atividadevi.Modelo.Eleitor;
 
 @Stateless
-public class PessoaDao extends GenericDao<Pessoa>{
+public class EleitorDao extends GenericDao<Eleitor>{
 
 	@PersistenceContext
 	private EntityManager em;
 	
 	@Override
-	protected EntityManager getEntityManager(){
+	protected EntityManager getEntityManager() {
 		return em;
 	}
 	
-	public PessoaDao(){
-		super(Pessoa.class);
+	public EleitorDao() {
+		super(Eleitor.class);
 	}
-	
+
 }

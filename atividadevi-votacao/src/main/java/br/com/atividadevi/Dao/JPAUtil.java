@@ -5,13 +5,13 @@ import javax.enterprise.inject.Disposes;
 import javax.enterprise.inject.Produces;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import javax.persistence.PersistenceUnit;
 
 public class JPAUtil {
 		
 	@PersistenceUnit(name = "atividadevi-votacao")
-	EntityManagerFactory emf ;		
-	
+	EntityManagerFactory emf ;
+		
 	
 	@Produces
 	@RequestScoped
