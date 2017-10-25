@@ -1,7 +1,9 @@
 package br.com.atividadevi.Beans;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -10,6 +12,7 @@ import br.com.atividadevi.Dao.CandidatoDao;
 import br.com.atividadevi.Dao.PessoaDao;
 import br.com.atividadevi.Modelo.Candidato;
 import br.com.atividadevi.Modelo.Pessoa;
+import br.com.atividadevi.Service.CandidatoService;
 
 
 @Named("candidatoBean")
@@ -24,20 +27,35 @@ public class CandidatoBean implements Serializable{
 
 	private Integer pessoaId;
 	
-	private Integer candidatoId;
+	private Integer idCandidato;
 	
-	@Inject
-	private PessoaDao pessoaDao;
+	private List<Candidato> candidatos;
 	
-	@Inject
-	private CandidatoDao candidatoDao;
+//	@Inject
+//	private PessoaDao pessoaDao;
+//	
+//	@Inject
+//	private CandidatoDao candidatoDao;
 	
+	@EJB
+	private CandidatoService candidatoService;
+	
+//	public void gravar(){
+//		try{
+//			this.pessoa.setIdPessoa(0);
+//			this.candidato.setCandidatoId(0);
+//			this.pessoaDao.create(this.pessoa);
+//			this.candidato.setPessoa(pessoa);
+//			this.candidatoDao.create(this.candidato);
+//		}finally{
+//			this.candidato = new Candidato();
+//			this.pessoa = new Pessoa();
+//			this.candidato.setCandidatoId(0);
+//			this.pessoa.setIdPessoa(0);
+//		}
+//	}
 	public void gravar(){
-		this.candidatoDao.begin();
-		this.pessoa.setIdPessoa(0);
-		this.candidato.setCandidatoId(0);
-		this.pessoaDao.create(this.pessoa);
-		this.candidatoDao.create(this.candidato);
+		candidatoService.gravar(pessoa, candidato, pessoaId, idCandidato);
 	}
 
 	public Integer getPessoaId() {
@@ -49,28 +67,28 @@ public class CandidatoBean implements Serializable{
 	}
 
 	public Integer getCandidatoId() {
-		return candidatoId;
+		return idCandidato;
 	}
 
-	public void setCandidatoId(Integer candidatoId) {
-		this.candidatoId = candidatoId;
+	public void setCandidatoId(Integer idCandidato) {
+		this.idCandidato = idCandidato;
 	}
 
-	public PessoaDao getPessoaDao() {
-		return pessoaDao;
-	}
+//	public PessoaDao getPessoaDao() {
+//		return pessoaDao;
+//	}
 
-	public void setPessoaDao(PessoaDao pessoaDao) {
-		this.pessoaDao = pessoaDao;
-	}
-
-	public CandidatoDao getCandidatoDao() {
-		return candidatoDao;
-	}
-
-	public void setCandidatoDao(CandidatoDao candidatoDao) {
-		this.candidatoDao = candidatoDao;
-	}
+//	public CandidatoDao getCandidatoDao() {
+//		return candidatoDao;
+//	}
+//
+//	public void setCandidatoDao(CandidatoDao candidatoDao) {
+//		this.candidatoDao = candidatoDao;
+//	}
+//	
+//	public void setPessoaDao(PessoaDao pessoaDao) {
+//		this.pessoaDao = pessoaDao;
+//	}
 
 	public Pessoa getPessoa() {
 		return pessoa;
@@ -86,5 +104,14 @@ public class CandidatoBean implements Serializable{
 
 	public void setCandidato(Candidato candidato) {
 		this.candidato = candidato;
+	}
+//
+//	public List<Candidato> getCandidatos() {
+//		this.candidatos = this.candidatoDao.readTodos();
+//		return candidatos;
+//	}
+
+	public void setCandidatos(List<Candidato> candidatos) {
+		this.candidatos = candidatos;
 	}
 }

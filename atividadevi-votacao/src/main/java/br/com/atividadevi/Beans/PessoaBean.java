@@ -2,7 +2,6 @@ package br.com.atividadevi.Beans;
 
 import java.io.Serializable;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -14,9 +13,8 @@ import br.com.atividadevi.Modelo.Pessoa;
 @SessionScoped
 public class PessoaBean implements Serializable{
 
-	private static final long serialVersionUID = 3952477667149303910L;
+	private static final long serialVersionUID = 1L;
 
-	@Inject
 	private Pessoa pessoa = new Pessoa();
 	
 	private Integer pessoaId;
@@ -24,14 +22,11 @@ public class PessoaBean implements Serializable{
 	@Inject
 	private PessoaDao pessoaDao;
 	
-	@PostConstruct
 	public void gravar(){
-		this.pessoaDao.begin();
-		this.pessoaDao.create(pessoa);
-		this.pessoaDao.commit();
-		this.pessoaDao.close();
+		this.pessoa.setIdPessoa(0);
+		this.pessoaDao.create(this.pessoa);
 	}
-
+	
 	public Pessoa getPessoa() {
 		return pessoa;
 	}

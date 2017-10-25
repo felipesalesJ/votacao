@@ -2,14 +2,15 @@ package br.com.atividadevi.Beans;
 
 import java.io.Serializable;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.atividadevi.Dao.EleitorDao;
-import br.com.atividadevi.Dao.PessoaDao;
+import br.com.atividadevi.Service.EleitorService;
 import br.com.atividadevi.Modelo.Eleitor;
 import br.com.atividadevi.Modelo.Pessoa;
+import br.com.atividadevi.Modelo.Telefone;
+import br.com.atividadevi.Modelo.Endereco;
 
 @Named("eleitorBean")
 @SessionScoped
@@ -21,23 +22,62 @@ public class EleitorBean  implements Serializable{
 	
 	private Eleitor eleitor = new Eleitor();
 	
+	private Telefone telefone = new Telefone();
+	
+	private Endereco endereco = new Endereco();
+	
 	private Integer pessoaId;
 	
 	private Integer eleitorId;
 	
-	@Inject
-	private PessoaDao pessoaDao;
+	private Integer telefoneId;
 	
-	@Inject
-	private EleitorDao eleitorDao;
+	private Integer enderecoId;
 	
-	public void gravar(){
-		this.eleitor.setEleitorId(0);
-		this.pessoa.setIdPessoa(0);
-		this.pessoaDao.create(pessoa);
-		this.eleitorDao.create(eleitor);
-	}
+	@EJB
+	private EleitorService eleitorSevice;
+	
+//	@Inject
+//	private PessoaDao pessoaDao;
+//	
+//	@Inject
+//	private EleitorDao eleitorDao;
+//	
+//	@Inject
+//	private TelefoneDao telefoneDao;
+//	
+//	@Inject
+//	private EnderecoDao enderecoDao;
+	
+//	public void gravar(){
+//		try{
+//			this.pessoa.setIdPessoa(0);
+//			this.eleitor.setEleitorId(0);
+//			this.eleitor.setPessoa(pessoa);
+//			this.endereco.setEnderecoId(0);
+//			this.telefone.setTelefoneId(0);
+//			this.pessoaDao.create(pessoa);
+//			this.eleitor.setEndereco(endereco);
+//			this.eleitor.setTelefone(telefone);
+//			this.telefoneDao.create(this.telefone);
+//			this.enderecoDao.create(this.endereco);
+//			this.eleitorDao.create(eleitor);
+//		}finally{
+//			this.pessoa = new Pessoa();
+//			this.eleitor = new Eleitor();
+//			this.endereco = new Endereco();
+//			this.telefone = new Telefone();
+//			this.eleitor.setEleitorId(0);
+//			this.pessoa.setIdPessoa(0);
+//			this.endereco.setEnderecoId(0);
+//			this.telefone.setTelefoneId(0);
+//		}
+//	}
 
+	public void gravar(){
+		eleitorSevice.gravar(pessoa, eleitor, telefone, endereco, pessoaId, eleitorId, telefoneId, enderecoId);
+	}
+	
 	public Pessoa getPessoa() {
 		return pessoa;
 	}
@@ -70,20 +110,36 @@ public class EleitorBean  implements Serializable{
 		this.eleitorId = eleitorId;
 	}
 
-	public PessoaDao getPessoaDao() {
-		return pessoaDao;
+	public Endereco getEndereco() {
+		return endereco;
 	}
 
-	public void setPessoaDao(PessoaDao pessoaDao) {
-		this.pessoaDao = pessoaDao;
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
-	public EleitorDao getEleitorDao() {
-		return eleitorDao;
+	public Telefone getTelefone() {
+		return telefone;
 	}
 
-	public void setEleitorDao(EleitorDao eleitorDao) {
-		this.eleitorDao = eleitorDao;
+	public void setTelefone(Telefone telefone) {
+		this.telefone = telefone;
+	}
+
+	public Integer getTelefoneId() {
+		return telefoneId;
+	}
+
+	public void setTelefoneId(Integer telefoneId) {
+		this.telefoneId = telefoneId;
+	}
+
+	public Integer getEnderecoId() {
+		return enderecoId;
+	}
+
+	public void setEnderecoId(Integer enderecoId) {
+		this.enderecoId = enderecoId;
 	}
 	
 }
