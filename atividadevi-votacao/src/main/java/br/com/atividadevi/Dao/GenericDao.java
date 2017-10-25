@@ -32,9 +32,10 @@ public abstract class GenericDao<T>{
 	public void rollback(){
 		getEntityManager().getTransaction().rollback();
 	}
-	
+
 	public void create(T t){
 		getSession().save(t);
+		getSession().flush();
 	}
 	
 	public void close(){
