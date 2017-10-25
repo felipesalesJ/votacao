@@ -4,7 +4,7 @@ Implementation-Version: 1.0.0-SNAPSHOT
 Built-By: felipeJ
 Specification-Title: AtividadeVI-Votacao
 Implementation-Vendor-Id: br.gov.capes
-Build-Jdk: 1.8.0_144
+Build-Jdk: 1.8.0_112
 Specification-Version: 1.0.0-SNAPSHOT
 Created-By: Maven Integration for Eclipse
 

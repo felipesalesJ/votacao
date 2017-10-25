@@ -5,11 +5,13 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
@@ -23,9 +25,10 @@ public class Candidato implements Serializable{
 	@SequenceGenerator(name="SequenceIdCandiGenerator", sequenceName="ID_CANDIDATO_SEQ")
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "SequenceIdCandiGenerator")
 	@Column(name = "ID_CANDIDATO")
-	private int candidatoId;
+	private Integer candidatoId;
 	
-	@OneToOne//(cascade=CascadeType.DETACH)
+	
+	@OneToOne(fetch = FetchType.EAGER)//(cascade=CascadeType)
 	@JoinColumn(name = "ID_PESSOA")
 	private Pessoa pessoa;
 

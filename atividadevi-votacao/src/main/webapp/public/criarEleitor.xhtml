@@ -1,0 +1,51 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
+
+
+<h:head>Registro de pessoa</h:head> 
+	
+<h:body> 	
+	<h:form id="formEleitor">
+			 <h:panelGrid columns="2">
+				
+				<h:outputLabel value="Nome" />
+				<h:inputText id="nome" value="#{eleitorBean.pessoa.nome}"/>
+					
+				<h:outputLabel value="CPF" />
+				<h:inputText id="cpf"  value="#{eleitorBean.pessoa.cpf}"/>
+					
+				<h:outputLabel value="Data de Nascimento" />
+				<p:calendar id="datanascimento"  value="#{eleitorBean.pessoa.datanascimento.time}" timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy" mask="true"/>
+						
+				<h:outputLabel value="Genero" />
+				<h:inputText id="genero"  value="#{eleitorBean.pessoa.genero}"/>
+					
+				<h:outputLabel value="Email"/>
+				<h:inputText id="email"  value="#{eleitorBean.pessoa.email}"/>			
+				
+				<h:outputLabel value="Telefone"/>
+				<h:inputText id="telefone"  value="#{eleitorBean.telefone.telefoneNum}"/>
+				
+				<h:outputLabel value="Logradouro"/>
+				<h:inputText id="logrdouro"  value="#{eleitorBean.endereco.logradouro}"/>
+				
+				<h:outputLabel value="Bairro"/>
+				<h:inputText id="bairro"  value="#{eleitorBean.endereco.bairro}"/>
+				
+				<h:outputLabel value="Municipio"/>
+				<h:inputText id="municipio"  value="#{eleitorBean.endereco.municipio}"/>
+				
+				<h:outputLabel value="CEP"/>
+				<h:inputText id="cep"  value="#{eleitorBean.endereco.cep}"/>
+					
+				<p:commandButton value="Gravar" action="#{eleitorBean.gravar()}" process="@form" update="@form :formEleitor"/>
+					
+			</h:panelGrid>
+		</h:form>
+	</h:body>
+</html>

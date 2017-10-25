@@ -3,7 +3,6 @@ package br.com.atividadevi.Modelo;
 import java.io.Serializable;
 import java.util.Calendar;
 
-import javax.ejb.Stateful;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -14,13 +13,14 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "Pessoa")
+
 public class Pessoa implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@SequenceGenerator(name="ID_PESSOA_SEQ", sequenceName="ID_PESSOA_SEQ")
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_PESSOA_SEQ")
+	@SequenceGenerator(name="ID_PES_SEQ", sequenceName="ID_PESSOA_SEQ")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "ID_PES_SEQ")
 	@Column(name = "ID_PESSOA")
 	private Integer idPessoa; 
 	

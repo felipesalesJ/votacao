@@ -1,0 +1,21 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
+
+	<h:head>Menu</h:head> 
+	<body> 
+		<h:form id="formMenu">
+			<p:messages />  
+			<p:fieldset legends="TabelaMenu">
+				<h:panelGrid columns="4">
+					<h:commandButton value="Votar" action="votar?faces-redirects=true" process="@form" update="@form :formMenu"/>
+					<h:commandButton value="Sair" action="#{loginBean.deslogar()}" process="@form" update="@form :formMenu"/>
+					<h:commandButton value="Apagar Conta" action="votar?faces-redirects=true" process="@form" update="@form :formMenu"/>
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+	</body> 
+</html>

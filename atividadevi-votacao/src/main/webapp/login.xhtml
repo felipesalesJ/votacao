@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+	  xmlns:f="http://xmlns.jcp.org/jsf/core"
+	  xmlns:p="http://primefaces.org/ui"
+	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
+
+	<h:head>Página de login</h:head> 
+	
+	<body> 
+		<h:form id="formPessoa">
+			<p:messages />  
+			<p:fieldset legends="TabelaPessoa">
+				<h:panelGrid columns="2">
+				
+				
+					<h:outputLabel value="CPF" />
+					<h:inputText id="cpf"  value="#{loginBean.pessoa.cpf}"/>
+					
+					<h:outputLabel value="Data de Nascimento" />
+					<p:calendar id="datanascimento"  value="#{loginBean.pessoa.datanascimento.time}" timeZone="America/Sao_Paulo" pattern="dd/MM/yyyy" mask="true"/>
+					
+					<p:commandButton value="Logar" action="#{loginBean.login()}" process="@form" update="@form :formPessoa"/>
+					
+					
+				</h:panelGrid>
+			</p:fieldset>
+		</h:form>
+	</body>
+</html>
