@@ -10,10 +10,10 @@
 		<h:form id="formMenu">
 			<p:messages />  
 			<p:fieldset legends="TabelaMenu">
+				<h:outputText value="#{votoBean.voto.idcomprovante}" />
 				<h:panelGrid columns="4">
-					<h:commandButton value="Votar" action="votar?faces-redirects=true" process="@form" update="@form :formMenu"/>
+					<h:commandButton value="Voltar" action="menu?faces-redirects=true" process="@form" update="@form :formMenu"/>
 					<h:commandButton value="Sair" action="#{loginBean.deslogar()}" process="@form" update="@form :formMenu"/>
-					<h:commandButton value="Apagar Conta" action="login?faces-redirects=true" process="@form" update="@form :formMenu"/>
 				</h:panelGrid>
 			</p:fieldset>
 		</h:form>

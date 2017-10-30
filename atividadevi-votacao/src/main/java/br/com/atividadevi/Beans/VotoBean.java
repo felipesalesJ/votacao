@@ -4,6 +4,7 @@ import static br.com.atividadevi.Util.ExcepctionUtil.getExceptionCauseMessage;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Random;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
@@ -40,15 +41,15 @@ public class VotoBean extends Beans{
 	
 	private Integer candidatoid;
 
-	@Inject
-	private VotoDao votoDao;
-	
-	@Inject
-	private EleitorDao eleitorDao;
-	
-	@Inject
-	private UsuarioBean usuarioBean;
-	
+//	@Inject
+//	private VotoDao votoDao;
+//	
+//	@Inject
+//	private EleitorDao eleitorDao;
+//	
+//	@Inject
+//	private UsuarioBean usuarioBean;
+//	 
 	@EJB
 	private VotoService votoService;
 
@@ -71,21 +72,26 @@ public class VotoBean extends Beans{
 //		}
 //	}
 	
-	public void votar(){
-		votoService.gravar(voto, eleitor, candidato, candidatoid, new Callback<Pessoa>() {
-
-			@Override
-			public void onSuccess(Pessoa object) {
-				addMensageInfo(String.format("Candidato cadastrado com sucesso"));	
-			}
-
-			@Override
-			public void onFailure(Exception e) {
-				addMensageError(getExceptionCauseMessage(e));				
-			}
-		});
-		
+	public String votar(){
+		try{
+			votoService.gravar(voto, eleitor, candidato, candidatoid, new Callback<Pessoa>() {
+	
+				@Override
+				public void onSuccess(Pessoa object) {
+					addMensageInfo(String.format("Voto realizado com sucesso"));	
+				}
+	
+				@Override
+				public void onFailure(Exception e) {
+					addMensageError(getExceptionCauseMessage(e));				
+				}
+			});
+			return "comprovante?faces-redirects=true"; 
+		}catch(Exception e){
+			return "votar?faces-redirects=true";
+		}
 	}
+	
 	public Voto getVoto() {
 		return voto;
 	}
@@ -126,13 +132,13 @@ public class VotoBean extends Beans{
 		this.candidatoid = candidatoid;
 	}
 
-	public VotoDao getVotoDao() {
-		return votoDao;
-	}
-
-	public void setVotoDao(VotoDao votoDao) {
-		this.votoDao = votoDao;
-	}
+//	public VotoDao getVotoDao() {
+//		return votoDao;
+//	}
+//
+//	public void setVotoDao(VotoDao votoDao) {
+//		this.votoDao = votoDao;
+//	}
 
 	public List<Candidato> getCandidatos() {
 		return candidatos;
@@ -142,11 +148,11 @@ public class VotoBean extends Beans{
 		this.candidatos = candidatos;
 	}
 
-	public EleitorDao getEleitorDao() {
-		return eleitorDao;
-	}
-
-	public void setEleitorDao(EleitorDao eleitorDao) {
-		this.eleitorDao = eleitorDao;
-	}
+//	public EleitorDao getEleitorDao() {
+//		return eleitorDao;
+//	}
+//
+//	public void setEleitorDao(EleitorDao eleitorDao) {
+//		this.eleitorDao = eleitorDao;
+//	}
 }

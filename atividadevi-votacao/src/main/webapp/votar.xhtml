@@ -11,11 +11,12 @@
 	<body>
 		<!-- <h:form id="formVotar" rendered="#{eleitorLogado != null}"> -->
 			<h:form id="formVotar">
-			<h:selectOneMenu value="#{votoBean.candidatoid}" id="candidatoIdvalue" >
-				<f:selectItems value="#{candidatoBean.candidatos}" var="candidatoId" itemLabel="#{candidatoId.candidatoId}" itemValue="#{candidatoId.candidatoId}" />
-			</h:selectOneMenu>
-			<br></br>
-			<h:commandButton value="confirma" action="#{votoBean.votar()}" label="submit" style="height:30px" process="@form" update="@form :formVotar"/>
+			<p:messages /> 
+				<h:selectOneMenu value="#{votoBean.candidatoid}" id="candidatoIdvalue" >
+					<f:selectItems value="#{candidatoBean.candidatos}" var="candidatoId" itemLabel="#{candidatoId.candidatoId}" itemValue="#{candidatoId.candidatoId}" />
+				</h:selectOneMenu>
+				<br></br>
+				<h:commandButton value="confirma" action="#{votoBean.votar()}" label="submit" style="height:30px" process="@form" update="@form :formVotar"/>
 			
 			
 			</h:form>

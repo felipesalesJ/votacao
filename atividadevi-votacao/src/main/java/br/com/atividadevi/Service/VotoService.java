@@ -17,13 +17,17 @@ import br.com.atividadevi.Modelo.Candidato;
 import br.com.atividadevi.Modelo.Eleitor;
 import br.com.atividadevi.Modelo.Pessoa;
 import br.com.atividadevi.Modelo.Voto;
+import br.com.atividadevi.Util.GeradorComprovante;
 
 @Stateless
 public class VotoService {
 		
 		private static final Logger logger = Logger.getGlobal();
+		
+		private Integer comprovanteid;
+		
 		@EJB
-		private VotoDao votoDao;
+		private VotoDao votoDao;		
 		
 		@EJB
 		private EleitorDao eleitorDao;
@@ -33,6 +37,9 @@ public class VotoService {
 		
 		@EJB
 		private PessoaValidaService pessoaValidaService;
+		
+		@Inject
+		private GeradorComprovante geradorComprovante;
 		
 		public void gravar(Voto voto, Eleitor eleitor, Candidato candidato, Integer candidatoid, Callback<Pessoa> callback){
 			try{
@@ -45,6 +52,8 @@ public class VotoService {
 				voto.setCandidatoid(candidato);
 				voto.setEleitorid(eleitor);
 				voto.setIdvoto(0);
+				comprovanteid = geradorComprovante.geradorid();
+				voto.setIdcomprovante(comprovanteid);
 				this.getVotoDao().create(voto);
 			}catch(Exception e){
 				logger.log(Level.SEVERE, e.getMessage(), e);
@@ -52,7 +61,7 @@ public class VotoService {
 			}finally{
 				candidato = new Candidato();
 				eleitor = new Eleitor();
-			}
+			}	
 		}
 
 		public EleitorDao getEleitorDao() {

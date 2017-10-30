@@ -26,8 +26,8 @@ public class Voto implements Serializable{
 	
 //	@SequenceGenerator(name="SequenceComprovante", sequenceName="ID_COMPROVANTE_SEQ")
 //	@GeneratedValue(strategy= GenerationType.IDENTITY, generator = "SequenceComprovante")
-//	@Column(name="ID_COMPROVANTE")
-//	private Integer idcomprovante;
+	@Column(name="ID_COMPROVANTE")
+	private Integer idcomprovante;
 	
 	@OneToOne(cascade=CascadeType.DETACH)
 	@JoinColumn(name = "ID_ELEITOR")
@@ -61,12 +61,12 @@ public class Voto implements Serializable{
 		this.candidato = candidato;
 	}
 
-//	public Integer getIdcomprovante() {
-//		return idcomprovante;
-//	}
-//
-//	public void setIdcomprovante(Integer idcomprovante) {
-//		this.idcomprovante = idcomprovante;
-//	}
+	public Integer getIdcomprovante() {
+		return idcomprovante;
+	}
+
+	public void setIdcomprovante(Integer idcomprovante) {
+		this.idcomprovante = idcomprovante;
+	}
 
 	}

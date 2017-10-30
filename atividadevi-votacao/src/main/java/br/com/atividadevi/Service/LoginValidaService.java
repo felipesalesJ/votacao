@@ -7,7 +7,9 @@ import br.com.atividadevi.Modelo.Pessoa;
 
 @Stateless
 public class LoginValidaService {
-
+	
+	
+	
 	public void validaCpf(Pessoa pessoa){
 		String cpf = pessoa.getCpf();
 		tamanhoCPF(cpf);
@@ -27,5 +29,12 @@ public class LoginValidaService {
 		}catch(Exception e){
 			throw new LoginCpfErradoException("Use somente numeros ao digitar o CPF");
 		} 
+	}
+	private void validaEleitor(String cpf){
+		try{
+			
+		}catch(Exception e){
+			
+		}
 	}
 }

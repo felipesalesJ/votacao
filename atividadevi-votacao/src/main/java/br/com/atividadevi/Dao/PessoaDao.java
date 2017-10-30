@@ -55,7 +55,10 @@ public class PessoaDao extends GenericDao<Pessoa>{
 //	}	
 	
 	public boolean verifyEleitor(Pessoa pessoa) {
-		Query query  = em.createQuery("SELECT PE FROM Pessoa PE WHERE PE.cpf = :pCPF AND PE.datanascimento = :pDATANASCIMENTO")
+		Query query  = em.createQuery("SELECT PE "
+									+ "FROM Pessoa PE "
+									+ "INNER JOIN PE.eleitor EL "
+									+ "WHERE PE.cpf = :pCPF AND PE.datanascimento = :pDATANASCIMENTO")
 			.setParameter("pCPF", pessoa.getCpf())
 			.setParameter("pDATANASCIMENTO", pessoa.getDatanascimento());
 //		if(query != null){

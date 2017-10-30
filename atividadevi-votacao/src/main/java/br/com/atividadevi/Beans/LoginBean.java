@@ -3,7 +3,9 @@ package br.com.atividadevi.Beans;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.inject.Named;
+
 import br.com.atividadevi.Modelo.Eleitor;
 import br.com.atividadevi.Modelo.Pessoa;
 import br.com.atividadevi.Service.LoginService;
@@ -24,9 +26,32 @@ public class LoginBean extends Beans{
 	@EJB
 	private LoginService loginService;
 
+
 	public String login(){
+		try{	
+		loginService.login(pessoa, new Callback<Pessoa>(){
+	
+				@Override
+				public void onSuccess(Pessoa object) {
+					addMensageInfo(String.format("Logou com sucesso")); 
+					
+				}
+	
+				@Override
+				public void onFailure(Exception e) {
+					addMensageError(getExceptionCauseMessage (e));
+					
+				}
+			});
+			return "menu?faces-redirects=true"; 
+		}catch(Exception e){
+			return "login?faces-redirects=true";
+		}
+	}
+	
+	public String deslogar(){
 		try{
-			loginService.login(pessoa, new Callback<Pessoa>(){
+			loginService.logout(pessoa, new Callback<Pessoa>(){
 	
 				@Override
 				public void onSuccess(Pessoa object) {
@@ -39,14 +64,10 @@ public class LoginBean extends Beans{
 				}
 			
 			});
-			return "menu?faces-redirects=true"; 
+			return "login?faces-redirects=true";
 		}catch(Exception e){
-			return null;
+			return "menu?faces-redirects=true"; 
 		}
-	}
-	
-	public String deslogar(){
-		return null;
 	}
 	
 	public Pessoa getPessoa() {

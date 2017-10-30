@@ -28,17 +28,29 @@ public class LoginService {
 	public String login(Pessoa pessoa, Callback<Pessoa> callback){
 		try{
 			loginValidaService.validaCpf(pessoa);
-			boolean existeEleitor = getPessoaDao().verifyEleitor(pessoa);
+			boolean existeEleitor = eleitorDao.findEleitor(pessoa.getCpf()) != null;
 			if(existeEleitor){
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", pessoa);
 			}
+			return "menu?faces-redirects=true"; 
+		}catch(Exception e){
+			logger.log(Level.SEVERE, e.getMessage(), e);
+			callback.onFailure(e);
+			return "login?faces-redirects=true";
+		}
+	}
+
+	public String logout(Pessoa pessoa, Callback<Pessoa> callback) {
+		try{
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().remove("usuario", pessoa);
 		}catch(Exception e){
 			logger.log(Level.SEVERE, e.getMessage(), e);
 			callback.onFailure(e);
 		}
 		return null;
+		
 	}
-
+	
 	public static Logger getLogger() {
 		return logger;
 	}
@@ -58,6 +70,7 @@ public class LoginService {
 	public void setEleitorDao(EleitorDao eleitorDao) {
 		this.eleitorDao = eleitorDao;
 	}
+
 	
 
 }
