@@ -1,23 +1,20 @@
 package br.com.atividadevi.Beans;
 
-import java.io.Serializable;
 import java.util.List;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
 import javax.inject.Named;
 
-import br.com.atividadevi.Dao.CandidatoDao;
-import br.com.atividadevi.Dao.PessoaDao;
+import br.com.atividadevi.Exception.Callback;
 import br.com.atividadevi.Modelo.Candidato;
 import br.com.atividadevi.Modelo.Pessoa;
 import br.com.atividadevi.Service.CandidatoService;
-
+import static br.com.atividadevi.Util.ExcepctionUtil.getExceptionCauseMessage;
 
 @Named("candidatoBean")
 @SessionScoped
-public class CandidatoBean implements Serializable{
+public class CandidatoBean extends Beans{
 
 	private static final long serialVersionUID = 1L;
 
@@ -55,7 +52,17 @@ public class CandidatoBean implements Serializable{
 //		}
 //	}
 	public void gravar(){
-		candidatoService.gravar(pessoa, candidato, pessoaId, idCandidato);
+		candidatoService.gravar(pessoa, candidato, new Callback<Pessoa>() {
+			
+			@Override
+			public void onSuccess(Pessoa object) {
+				addMensageInfo(String.format("Candidato cadastrado com sucesso"));
+			}
+			@Override
+			public void onFailure(Exception e) {
+				addMensageError(getExceptionCauseMessage(e));
+			}
+		});
 	}
 
 	public Integer getPessoaId() {
@@ -105,13 +112,13 @@ public class CandidatoBean implements Serializable{
 	public void setCandidato(Candidato candidato) {
 		this.candidato = candidato;
 	}
-//
-//	public List<Candidato> getCandidatos() {
-//		this.candidatos = this.candidatoDao.readTodos();
-//		return candidatos;
-//	}
 
 	public void setCandidatos(List<Candidato> candidatos) {
 		this.candidatos = candidatos;
+	}
+
+	public List<Candidato> getCandidatos() {
+		this.candidatos = candidatoService.readTodos();
+		return candidatos;
 	}
 }

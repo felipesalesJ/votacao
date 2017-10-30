@@ -17,9 +17,7 @@ import br.com.atividadevi.Modelo.Pessoa;
 @Named("usuarioBean")
 @SessionScoped
 public class UsuarioBean implements Serializable{
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 //	@EJB
 //	private UsuarioService usuarioService;
@@ -27,6 +25,7 @@ public class UsuarioBean implements Serializable{
 
 	public Pessoa getCurrentUser(){
 		ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
+		@SuppressWarnings("unused")
 		HttpSession httpSession = (HttpSession) externalContext.getSession(true);
 		Pessoa eleitorLogador = (Pessoa) FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get("usuario");
 		return eleitorLogador;

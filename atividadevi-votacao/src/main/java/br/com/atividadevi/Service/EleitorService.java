@@ -1,5 +1,8 @@
 package br.com.atividadevi.Service;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 
@@ -7,6 +10,7 @@ import br.com.atividadevi.Dao.EleitorDao;
 import br.com.atividadevi.Dao.EnderecoDao;
 import br.com.atividadevi.Dao.PessoaDao;
 import br.com.atividadevi.Dao.TelefoneDao;
+import br.com.atividadevi.Exception.Callback;
 import br.com.atividadevi.Modelo.Eleitor;
 import br.com.atividadevi.Modelo.Endereco;
 import br.com.atividadevi.Modelo.Pessoa;
@@ -15,6 +19,7 @@ import br.com.atividadevi.Modelo.Telefone;
 @Stateless
 public class EleitorService {
 
+	private static final Logger logger = Logger.getGlobal();
 	@EJB
 	private PessoaDao pessoaDao;
 	
@@ -26,9 +31,13 @@ public class EleitorService {
 	
 	@EJB
 	private EnderecoDao enderecoDao;
+	
+	@EJB
+	private PessoaValidaService pessoaValidaService;
 
-	public void gravar(Pessoa pessoa, Eleitor eleitor, Telefone telefone, Endereco endereco, Integer pessoaid, Integer eleitori, Integer telefoneid, Integer enderecoid){
+	public void gravar(Pessoa pessoa, Eleitor eleitor, Telefone telefone, Endereco endereco, Callback<Pessoa> callback){
 		try{
+			pessoaValidaService.validaCpf(pessoa);
 			pessoa.setIdPessoa(0);
 			eleitor.setEleitorId(0);
 			eleitor.setPessoa(pessoa);
@@ -40,6 +49,9 @@ public class EleitorService {
 			this.telefoneDao.create(telefone);
 			this.getEnderecoDao().create(endereco);
 			this.eleitorDao.create(eleitor);
+		}catch(Exception e){
+			logger.log(Level.SEVERE, e.getMessage(), e);
+			callback.onFailure(e);
 		}finally{
 			pessoa = new Pessoa();
 			eleitor = new Eleitor();

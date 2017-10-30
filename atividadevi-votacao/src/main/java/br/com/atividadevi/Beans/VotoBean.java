@@ -1,24 +1,28 @@
 package br.com.atividadevi.Beans;
 
+import static br.com.atividadevi.Util.ExcepctionUtil.getExceptionCauseMessage;
+
 import java.io.Serializable;
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpServletRequest;
 
-import br.com.atividadevi.Modelo.Eleitor;
-import br.com.atividadevi.Modelo.Voto;
-import br.com.atividadevi.Modelo.Candidato;
-import br.com.atividadevi.Modelo.Pessoa;
 import br.com.atividadevi.Dao.EleitorDao;
 import br.com.atividadevi.Dao.VotoDao;
+import br.com.atividadevi.Exception.Callback;
+import br.com.atividadevi.Modelo.Candidato;
+import br.com.atividadevi.Modelo.Eleitor;
+import br.com.atividadevi.Modelo.Pessoa;
+import br.com.atividadevi.Modelo.Voto;
+import br.com.atividadevi.Service.VotoService;
 
 
 @Named("votoBean")
 @SessionScoped
-public class VotoBean implements Serializable{
+public class VotoBean extends Beans{
 
 	private static final long serialVersionUID = 1L;
 
@@ -44,25 +48,44 @@ public class VotoBean implements Serializable{
 	
 	@Inject
 	private UsuarioBean usuarioBean;
-
-	public String votar(){
-		try{
-			Pessoa votante = usuarioBean.getCurrentUser();
-			String cpf = votante.getCpf();
-			Eleitor eleitor = eleitorDao.findVoto(cpf);
-			Integer eleitorid = eleitor.getEleitorId();
-			this.candidato.setCandidatoId(candidatoid);
-			this.eleitor.setEleitorId(eleitorid);
-			this.voto.setCandidatoid(candidato);
-			this.voto.setEleitorid(eleitor);
-			return "menu?faces-redirects=true";
-		}finally{
-			this.voto.setIdvoto(0);
-			this.candidato = new Candidato();
-			this.eleitor = new Eleitor();
-		}
-	}
 	
+	@EJB
+	private VotoService votoService;
+
+//	public String votar(){
+//		try{
+//			Pessoa votante = usuarioBean.getCurrentUser();
+//			String cpf = votante.getCpf();
+//			Integer eleitorid = eleitorDao.findEleitor(cpf);
+//			Eleitor eleitor = eleitorDao.buscarPorId(eleitorid);
+//			this.candidato.setCandidatoId(candidatoid);
+//			this.eleitor.setEleitorId(eleitorid);
+//			this.voto.setCandidatoid(candidato);
+//			this.voto.setEleitorid(eleitor);
+//			this.voto.setIdvoto(0);
+//			this.votoDao.create(voto);
+//			return "menu?faces-redirects=true";
+//		}finally{
+//			this.candidato = new Candidato();
+//			this.eleitor = new Eleitor();
+//		}
+//	}
+	
+	public void votar(){
+		votoService.gravar(voto, eleitor, candidato, candidatoid, new Callback<Pessoa>() {
+
+			@Override
+			public void onSuccess(Pessoa object) {
+				addMensageInfo(String.format("Candidato cadastrado com sucesso"));	
+			}
+
+			@Override
+			public void onFailure(Exception e) {
+				addMensageError(getExceptionCauseMessage(e));				
+			}
+		});
+		
+	}
 	public Voto getVoto() {
 		return voto;
 	}

@@ -1,20 +1,20 @@
 package br.com.atividadevi.Beans;
 
-import java.io.Serializable;
-
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 
 import br.com.atividadevi.Service.EleitorService;
+import br.com.atividadevi.Exception.Callback;
 import br.com.atividadevi.Modelo.Eleitor;
 import br.com.atividadevi.Modelo.Pessoa;
 import br.com.atividadevi.Modelo.Telefone;
 import br.com.atividadevi.Modelo.Endereco;
+import static br.com.atividadevi.Util.ExcepctionUtil.getExceptionCauseMessage;
 
 @Named("eleitorBean")
 @SessionScoped
-public class EleitorBean  implements Serializable{
+public class EleitorBean extends Beans{
 
 	private static final long serialVersionUID = 1L;
 
@@ -75,7 +75,17 @@ public class EleitorBean  implements Serializable{
 //	}
 
 	public void gravar(){
-		eleitorSevice.gravar(pessoa, eleitor, telefone, endereco, pessoaId, eleitorId, telefoneId, enderecoId);
+		eleitorSevice.gravar(pessoa, eleitor, telefone, endereco, new Callback<Pessoa>() {
+			
+			@Override
+			public void onSuccess(Pessoa object) {
+				addMensageInfo(String.format("Eleitor cadastrado com sucesso"));
+			}
+			@Override
+			public void onFailure(Exception e) {
+				addMensageError(getExceptionCauseMessage(e));
+			}
+		});
 	}
 	
 	public Pessoa getPessoa() {

@@ -1,23 +1,19 @@
 package br.com.atividadevi.Beans;
 
 
-import java.io.Serializable;
-
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.context.FacesContext;
-import javax.inject.Inject;
 import javax.inject.Named;
-import javax.servlet.http.HttpSession;
-
 import br.com.atividadevi.Modelo.Eleitor;
 import br.com.atividadevi.Modelo.Pessoa;
-import br.com.atividadevi.Dao.EleitorDao;
-import br.com.atividadevi.Dao.PessoaDao;
+import br.com.atividadevi.Service.LoginService;
+import br.com.atividadevi.Exception.Callback;
+import static br.com.atividadevi.Util.ExcepctionUtil.getExceptionCauseMessage;
 
 
 @Named("loginBean")
 @SessionScoped
-public class LoginBean implements Serializable{
+public class LoginBean extends Beans{
 
 	private static final long serialVersionUID = 1L;
 
@@ -25,27 +21,28 @@ public class LoginBean implements Serializable{
 	
 	private Eleitor eleitor = new Eleitor();
 	
-	private Integer pessoaId;
-//	
-//	private FacesContext fc = FacesContext.getCurrentInstance();
-//	
-//	private HttpSession session = (HttpSession) fc.getExternalContext().getSession(false);
-	
-	@Inject
-	private PessoaDao pessoaDao;
-
-	@Inject
-	private EleitorDao eleitorDao;
+	@EJB
+	private LoginService loginService;
 
 	public String login(){
-//		boolean existePessoa = pessoaDao.verifyPessoa(pessoa);
-		boolean existeEleitor = pessoaDao.verifyEleitor(pessoa);
-		if(existeEleitor){
-			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", this.pessoa);
-			return "menu?faces-redirects=true";
+		try{
+			loginService.login(pessoa, new Callback<Pessoa>(){
+	
+				@Override
+				public void onSuccess(Pessoa object) {
+					addMensageInfo(String.format("Logou com sucesso")); 
+				}
+	
+				@Override
+				public void onFailure(Exception e) {
+					addMensageError(getExceptionCauseMessage (e));
+				}
+			
+			});
+			return "menu?faces-redirects=true"; 
+		}catch(Exception e){
+			return null;
 		}
-		return null;
-		
 	}
 	
 	public String deslogar(){
@@ -65,26 +62,4 @@ public class LoginBean implements Serializable{
 	public void setEleitor(Eleitor eleitor) {
 		this.eleitor = eleitor;
 	}
-
-	public EleitorDao getEleitorDao() {
-		return eleitorDao;
-	}
-	public void setEleitorDao(EleitorDao eleitorDao) {
-		this.eleitorDao = eleitorDao;
-	}
-	
-	public PessoaDao getPessoaDao() {
-		return pessoaDao;
-	}
-	public void setPessoaDao(PessoaDao pessoaDao) {
-		this.pessoaDao = pessoaDao;
-	}
-
-	public Integer getPessoaId() {
-		return pessoaId;
-	}
-
-	public void setPessoaId(Integer pessoaId) {
-		this.pessoaId = pessoaId;
-	}	
 }

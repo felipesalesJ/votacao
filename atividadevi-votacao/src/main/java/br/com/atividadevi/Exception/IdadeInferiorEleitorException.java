@@ -1,5 +1,5 @@
 package br.com.atividadevi.Exception;
 
-public class IdadeInferiorEleitorException {
+public class IdadeInferiorEleitorException extends Throwable{
 
 }

@@ -7,10 +7,11 @@
 	  xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
 
 
-<h:head>Registro de pessoa</h:head> 
+<h:head>Registro de eleitor</h:head> 
 	
 <h:body> 	
 	<h:form id="formEleitor">
+	<p:messages />
 			 <h:panelGrid columns="2">
 				
 				<h:outputLabel value="Nome" />
@@ -25,8 +26,12 @@
 				<h:outputLabel value="Genero" />
 				<h:inputText id="genero"  value="#{eleitorBean.pessoa.genero}"/>
 					
-				<h:outputLabel value="Email"/>
-				<h:inputText id="email"  value="#{eleitorBean.pessoa.email}"/>			
+	
+				<h:outputLabel value="Email" />
+				<h:inputText id="email"  value="#{eleitorBean.pessoa.email}" required="true" label="Email" validatorMessage="Esse email é inválido">
+					<f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+				</h:inputText>
+				
 				
 				<h:outputLabel value="Telefone"/>
 				<h:inputText id="telefone"  value="#{eleitorBean.telefone.telefoneNum}"/>

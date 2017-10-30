@@ -4,7 +4,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 import br.com.atividadevi.Modelo.Eleitor;
 
@@ -32,14 +31,13 @@ public class EleitorDao extends GenericDao<Eleitor>{
 		return resultado;
 	}
 
-	public Eleitor findEleitor(Object eleitor) {
+	public Integer findEleitor(String cpf) {
 		Query query = em.createQuery("SELECT EL.eleitorId "
 					+ "FROM Eleitor EL "
-					+ "INNER JOIN Pessoa PE "
-					+ "ON PE.idpessoa = EL.pessoa "
-					+ "WHERE EL.eleitorId = :idEl")
-		.setParameter("idEl", eleitor);
-		Eleitor resultado = (Eleitor) query.getSingleResult();
+					+ "INNER JOIN EL.pessoa PE "
+					+ "WHERE PE.cpf = :pCPF")
+		.setParameter("pCPF", cpf);
+		Integer resultado = (Integer) query.getSingleResult();
 		return resultado;
 	}
 }

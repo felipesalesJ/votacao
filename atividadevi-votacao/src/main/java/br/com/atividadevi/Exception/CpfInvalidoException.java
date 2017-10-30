@@ -1,10 +1,8 @@
 package br.com.atividadevi.Exception;
 
-public class CpfInvalidoException extends Throwable{
+public class CpfInvalidoException extends RuntimeException{
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-
+	public CpfInvalidoException(String string) {
+		super(String.format(string));
+	}
 }
