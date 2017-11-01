@@ -11,6 +11,7 @@ import br.com.atividadevi.Modelo.Pessoa;
 import br.com.atividadevi.Dao.EleitorDao;
 import br.com.atividadevi.Dao.PessoaDao;
 import br.com.atividadevi.Exception.Callback;
+import br.com.atividadevi.Exception.IdadeInvalidaException;
 
 @Stateless
 public class LoginService {
@@ -25,18 +26,17 @@ public class LoginService {
 	@EJB
 	private LoginValidaService loginValidaService;
 	
-	public String login(Pessoa pessoa, Callback<Pessoa> callback){
+	public void login(Pessoa pessoa, Callback<Pessoa> callback){
 		try{
 			loginValidaService.validaCpf(pessoa);
 			boolean existeEleitor = eleitorDao.findEleitor(pessoa.getCpf()) != null;
 			if(existeEleitor){
 				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", pessoa);
 			}
-			return "menu?faces-redirects=true"; 
 		}catch(Exception e){
 			logger.log(Level.SEVERE, e.getMessage(), e);
 			callback.onFailure(e);
-			return "login?faces-redirects=true";
+			throw new Exception();
 		}
 	}
 

@@ -68,6 +68,7 @@ public class CandidatoService {
 	public void gravar(Pessoa pessoa, Candidato candidato, Callback<Pessoa> callback){
 		try{
 			pessoaValidaService.validaCpf(pessoa);
+			pessoaValidaService.verificarIdadeCandidato(pessoa.getDatanascimento());
 			pessoa.setIdPessoa(0);
 			candidato.setCandidatoId(0);
 			candidato.setPessoa(pessoa);

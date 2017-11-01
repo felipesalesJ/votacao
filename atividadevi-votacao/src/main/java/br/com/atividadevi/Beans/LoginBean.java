@@ -52,17 +52,14 @@ public class LoginBean extends Beans{
 	public String deslogar(){
 		try{
 			loginService.logout(pessoa, new Callback<Pessoa>(){
-	
 				@Override
 				public void onSuccess(Pessoa object) {
 					addMensageInfo(String.format("Logou com sucesso")); 
 				}
-	
 				@Override
 				public void onFailure(Exception e) {
 					addMensageError(getExceptionCauseMessage (e));
 				}
-			
 			});
 			return "login?faces-redirects=true";
 		}catch(Exception e){

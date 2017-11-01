@@ -51,18 +51,22 @@ public class CandidatoBean extends Beans{
 //			this.pessoa.setIdPessoa(0);
 //		}
 //	}
-	public void gravar(){
-		candidatoService.gravar(pessoa, candidato, new Callback<Pessoa>() {
-			
-			@Override
-			public void onSuccess(Pessoa object) {
-				addMensageInfo(String.format("Candidato cadastrado com sucesso"));
-			}
-			@Override
-			public void onFailure(Exception e) {
-				addMensageError(getExceptionCauseMessage(e));
-			}
-		});
+	public String gravar(){
+		try{
+			candidatoService.gravar(pessoa, candidato, new Callback<Pessoa>() {
+				@Override
+				public void onSuccess(Pessoa object) {
+					addMensageInfo(String.format("Candidato cadastrado com sucesso"));
+				}
+				@Override
+				public void onFailure(Exception e) {
+					addMensageError(getExceptionCauseMessage(e));
+				}
+			});
+			return "login?faces-redirects=true"; 
+		}catch(Exception e){
+			return "criarCandidato?faces-redirects=true"; 
+		}
 	}
 
 	public Integer getPessoaId() {
