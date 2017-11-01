@@ -11,7 +11,8 @@ import br.com.atividadevi.Modelo.Pessoa;
 import br.com.atividadevi.Dao.EleitorDao;
 import br.com.atividadevi.Dao.PessoaDao;
 import br.com.atividadevi.Exception.Callback;
-import br.com.atividadevi.Exception.IdadeInvalidaException;
+//import br.com.atividadevi.Exception.LoginCpfErradoException;
+import br.com.atividadevi.Exception.LoginCpfErradoException;
 
 @Stateless
 public class LoginService {
@@ -26,7 +27,7 @@ public class LoginService {
 	@EJB
 	private LoginValidaService loginValidaService;
 	
-	public void login(Pessoa pessoa, Callback<Pessoa> callback){
+	public String login(Pessoa pessoa, Callback<Pessoa> callback){
 		try{
 			loginValidaService.validaCpf(pessoa);
 			boolean existeEleitor = eleitorDao.findEleitor(pessoa.getCpf()) != null;
@@ -36,8 +37,9 @@ public class LoginService {
 		}catch(Exception e){
 			logger.log(Level.SEVERE, e.getMessage(), e);
 			callback.onFailure(e);
-			throw new Exception();
+			throw new LoginCpfErradoException("Login Errado");
 		}
+		return "menu?faces-redirects=true"; 
 	}
 
 	public String logout(Pessoa pessoa, Callback<Pessoa> callback) {

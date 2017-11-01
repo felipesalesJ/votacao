@@ -19,8 +19,6 @@ import br.com.atividadevi.Modelo.Pessoa;
 public class UsuarioBean implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-//	@EJB
-//	private UsuarioService usuarioService;
 
 
 	public Pessoa getCurrentUser(){

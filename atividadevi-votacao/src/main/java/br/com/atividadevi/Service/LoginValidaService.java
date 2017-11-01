@@ -30,6 +30,7 @@ public class LoginValidaService {
 			throw new LoginCpfErradoException("Use somente numeros ao digitar o CPF");
 		} 
 	}
+	
 	private void validaEleitor(String cpf){
 		try{
 			

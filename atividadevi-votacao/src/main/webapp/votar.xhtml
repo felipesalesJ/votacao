@@ -12,13 +12,13 @@
 		<!-- <h:form id="formVotar" rendered="#{eleitorLogado != null}"> -->
 			<h:form id="formVotar">
 			<p:messages /> 
-				<f:selectOneMenu value="#{votoBean.candidatoid}" id="candidatoIdvalue" >
+				<h:selectOneMenu value="#{votoBean.candidatoid}" id="candidatoIdvalue" >
 					<f:selectItems value="#{candidatoBean.candidatos}" var="candidatoId" itemLabel="#{candidatoId.candidatoId}" itemValue="#{candidatoId.candidatoId}" />
-					<f:ajax execute="candidatoIdvalue" render="pCandidatoSelecionado"/>
-				</f:selectOneMenu>
+					<p:ajax event="change"/>
+				</h:selectOneMenu>
 				<br></br>
 				<h:commandButton value="confirma" action="#{votoBean.votar()}" label="submit" style="height:30px" process="@form" update="@form :formVotar"/>
-				<h:outputLabel id="candidatoIdvalue" value="candidatoBean.candidato.nome"/>
+			
 			</h:form>
 	</body>
 </html>

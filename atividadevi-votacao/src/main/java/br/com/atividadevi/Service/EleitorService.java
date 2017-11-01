@@ -38,7 +38,7 @@ public class EleitorService {
 	public void gravar(Pessoa pessoa, Eleitor eleitor, Telefone telefone, Endereco endereco, Callback<Pessoa> callback){
 		try{
 			pessoaValidaService.validaCpf(pessoa);
-			pessoaValidaService.verificarIdadeEleitor(pessoa.getDatanascimento());
+			pessoaValidaService.valiDataEleitor(pessoa.getDatanascimento());
 			pessoa.setIdPessoa(0);
 			eleitor.setEleitorId(0);
 			eleitor.setPessoa(pessoa);

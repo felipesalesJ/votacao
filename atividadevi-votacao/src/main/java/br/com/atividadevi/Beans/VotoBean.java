@@ -10,6 +10,7 @@ import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.security.auth.message.callback.PrivateKeyCallback.Request;
 
 import br.com.atividadevi.Dao.EleitorDao;
 import br.com.atividadevi.Dao.VotoDao;
@@ -79,7 +80,8 @@ public class VotoBean extends Beans{
 				@Override
 				public void onSuccess(Pessoa object) {
 					addMensageInfo(String.format("Voto realizado com sucesso"));	
-				}
+					
+					}
 	
 				@Override
 				public void onFailure(Exception e) {

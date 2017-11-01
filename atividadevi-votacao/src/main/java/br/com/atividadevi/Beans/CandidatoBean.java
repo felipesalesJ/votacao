@@ -1,10 +1,13 @@
 package br.com.atividadevi.Beans;
 
 import java.util.List;
+import java.util.logging.Handler;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletResponse;
+import javax.websocket.SendResult;
 
 import br.com.atividadevi.Exception.Callback;
 import br.com.atividadevi.Modelo.Candidato;
@@ -28,12 +31,6 @@ public class CandidatoBean extends Beans{
 	
 	private List<Candidato> candidatos;
 	
-//	@Inject
-//	private PessoaDao pessoaDao;
-//	
-//	@Inject
-//	private CandidatoDao candidatoDao;
-	
 	@EJB
 	private CandidatoService candidatoService;
 	
@@ -51,24 +48,42 @@ public class CandidatoBean extends Beans{
 //			this.pessoa.setIdPessoa(0);
 //		}
 //	}
-	public String gravar(){
-		try{
-			candidatoService.gravar(pessoa, candidato, new Callback<Pessoa>() {
-				@Override
-				public void onSuccess(Pessoa object) {
-					addMensageInfo(String.format("Candidato cadastrado com sucesso"));
-				}
-				@Override
-				public void onFailure(Exception e) {
-					addMensageError(getExceptionCauseMessage(e));
-				}
-			});
-			return "login?faces-redirects=true"; 
-		}catch(Exception e){
-			return "criarCandidato?faces-redirects=true"; 
-		}
+	public void gravar(){
+		candidatoService.gravar(pessoa, candidato, new Callback<Pessoa>() {
+			
+			@Override
+			public void onSuccess(Pessoa object) {
+				addMensageInfo(String.format("Candidato cadastrado com sucesso"));
+			}
+			@Override
+			public void onFailure(Exception e) {
+				addMensageError(getExceptionCauseMessage(e));
+			}
+		});
 	}
 
+	public void deletar(){
+		candidatoService.gravar(pessoa, candidato, new Callback<Pessoa>(){
+
+			@Override
+			public void onSuccess(Pessoa object) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onFailure(Exception e) {
+				// TODO Auto-generated method stub
+				
+			}
+			
+//			return "login?faces-redirect=true";
+		});
+		
+		
+
+//		return "menu?faces-redirect=true";
+	}
 	public Integer getPessoaId() {
 		return pessoaId;
 	}
