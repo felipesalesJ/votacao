@@ -52,19 +52,5 @@ public class PessoaValidaService {
 				throw new IdadeInferiorException("Não é possivel cadastrar eleitores com idade inferior à uma idade inferior à 16 anos");
 			}
 	}
-//	public boolean valiDataEleitor(Calendar datanascimento) throws Exception{
-//		boolean valida = false;
-//		try{
-//			Calendar data16;
-//			data16 = GregorianCalendar.getInstance();
-//			data16.add(Calendar.YEAR, -16);
-//			if(datanascimento.getTime().before(data16.getTime())){
-//				valida = true;
-//			}
-//		}catch(Exception e){
-//			e.printStackTrace();
-//		}
-//		return valida;
-//	}
 
 }

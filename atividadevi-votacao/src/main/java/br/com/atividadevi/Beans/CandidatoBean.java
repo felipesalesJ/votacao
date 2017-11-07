@@ -5,6 +5,7 @@ import java.util.logging.Handler;
 
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Named;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.SendResult;
@@ -12,6 +13,7 @@ import javax.websocket.SendResult;
 import br.com.atividadevi.Exception.Callback;
 import br.com.atividadevi.Modelo.Candidato;
 import br.com.atividadevi.Modelo.Pessoa;
+import br.com.atividadevi.Modelo.Voto;
 import br.com.atividadevi.Service.CandidatoService;
 import static br.com.atividadevi.Util.ExcepctionUtil.getExceptionCauseMessage;
 
@@ -24,6 +26,8 @@ public class CandidatoBean extends Beans{
 	private Pessoa pessoa = new Pessoa();
 
 	private Candidato candidato = new Candidato();
+	
+	private Voto voto = new Voto();
 
 	private Integer pessoaId;
 	
@@ -34,20 +38,6 @@ public class CandidatoBean extends Beans{
 	@EJB
 	private CandidatoService candidatoService;
 	
-//	public void gravar(){
-//		try{
-//			this.pessoa.setIdPessoa(0);
-//			this.candidato.setCandidatoId(0);
-//			this.pessoaDao.create(this.pessoa);
-//			this.candidato.setPessoa(pessoa);
-//			this.candidatoDao.create(this.candidato);
-//		}finally{
-//			this.candidato = new Candidato();
-//			this.pessoa = new Pessoa();
-//			this.candidato.setCandidatoId(0);
-//			this.pessoa.setIdPessoa(0);
-//		}
-//	}
 	public void gravar(){
 		candidatoService.gravar(pessoa, candidato, new Callback<Pessoa>() {
 			
@@ -61,9 +51,14 @@ public class CandidatoBean extends Beans{
 			}
 		});
 	}
+	
+	public String buscarPorId(){
+		candidato = candidatoService.listarPorId(candidato, candidato.getCandidatoId());
+		return candidato.getCandidatoId().toString(); 
+	}
 
 	public void deletar(){
-		candidatoService.gravar(pessoa, candidato, new Callback<Pessoa>(){
+		candidatoService.deletar(voto, pessoa, candidato, idCandidato, new Callback<Pessoa>(){
 
 			@Override
 			public void onSuccess(Pessoa object) {
@@ -84,6 +79,7 @@ public class CandidatoBean extends Beans{
 
 //		return "menu?faces-redirect=true";
 	}
+	
 	public Integer getPessoaId() {
 		return pessoaId;
 	}
@@ -99,22 +95,6 @@ public class CandidatoBean extends Beans{
 	public void setCandidatoId(Integer idCandidato) {
 		this.idCandidato = idCandidato;
 	}
-
-//	public PessoaDao getPessoaDao() {
-//		return pessoaDao;
-//	}
-
-//	public CandidatoDao getCandidatoDao() {
-//		return candidatoDao;
-//	}
-//
-//	public void setCandidatoDao(CandidatoDao candidatoDao) {
-//		this.candidatoDao = candidatoDao;
-//	}
-//	
-//	public void setPessoaDao(PessoaDao pessoaDao) {
-//		this.pessoaDao = pessoaDao;
-//	}
 
 	public Pessoa getPessoa() {
 		return pessoa;

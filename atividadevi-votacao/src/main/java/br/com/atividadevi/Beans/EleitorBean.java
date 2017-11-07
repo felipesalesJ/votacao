@@ -36,43 +36,6 @@ public class EleitorBean extends Beans{
 	
 	@EJB
 	private EleitorService eleitorSevice;
-	
-//	@Inject
-//	private PessoaDao pessoaDao;
-//	
-//	@Inject
-//	private EleitorDao eleitorDao;
-//	
-//	@Inject
-//	private TelefoneDao telefoneDao;
-//	
-//	@Inject
-//	private EnderecoDao enderecoDao;
-	
-//	public void gravar(){
-//		try{
-//			this.pessoa.setIdPessoa(0);
-//			this.eleitor.setEleitorId(0);
-//			this.eleitor.setPessoa(pessoa);
-//			this.endereco.setEnderecoId(0);
-//			this.telefone.setTelefoneId(0);
-//			this.pessoaDao.create(pessoa);
-//			this.eleitor.setEndereco(endereco);
-//			this.eleitor.setTelefone(telefone);
-//			this.telefoneDao.create(this.telefone);
-//			this.enderecoDao.create(this.endereco);
-//			this.eleitorDao.create(eleitor);
-//		}finally{
-//			this.pessoa = new Pessoa();
-//			this.eleitor = new Eleitor();
-//			this.endereco = new Endereco();
-//			this.telefone = new Telefone();
-//			this.eleitor.setEleitorId(0);
-//			this.pessoa.setIdPessoa(0);
-//			this.endereco.setEnderecoId(0);
-//			this.telefone.setTelefoneId(0);
-//		}
-//	}
 
 	public void gravar(){
 		eleitorSevice.gravar(pessoa, eleitor, telefone, endereco, new Callback<Pessoa>() {

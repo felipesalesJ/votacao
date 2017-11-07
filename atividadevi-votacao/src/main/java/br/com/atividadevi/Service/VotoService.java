@@ -1,5 +1,6 @@
 package br.com.atividadevi.Service;
 
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -7,12 +8,15 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 
+import org.hibernate.QueryException;
+
 import br.com.atividadevi.Beans.UsuarioBean;
 import br.com.atividadevi.Dao.CandidatoDao;
 import br.com.atividadevi.Dao.EleitorDao;
 import br.com.atividadevi.Dao.PessoaDao;
 import br.com.atividadevi.Dao.VotoDao;
 import br.com.atividadevi.Exception.Callback;
+import br.com.atividadevi.Exception.ErroEmVotoException;
 import br.com.atividadevi.Modelo.Candidato;
 import br.com.atividadevi.Modelo.Eleitor;
 import br.com.atividadevi.Modelo.Pessoa;
@@ -36,13 +40,19 @@ public class VotoService {
 		private UsuarioBean usuarioBean;
 		
 		@EJB
-		private PessoaValidaService pessoaValidaService;
+		private VotoValidaService votoValidaService;
 		
 		@Inject
 		private GeradorComprovante geradorComprovante;
 		
-		public void gravar(Voto voto, Eleitor eleitor, Candidato candidato, Integer candidatoid, Callback<Pessoa> callback){
+		public String gravar(Voto voto, Eleitor eleitor, Candidato candidato, Integer candidatoid, Callback<Pessoa> callback){
 			try{
+				Pessoa pessoa = usuarioBean.getCurrentUser();
+				String cpfEleitor = pessoa.getCpf();
+				if(votoDao.findVotoEleitor(cpfEleitor)){
+					throw new ErroEmVotoException("Você já votou");
+				};
+//				votoValidaService.votoJaExistente(votoDao, usuarioBean);
 				Pessoa votante = getUsuarioBean().getCurrentUser();
 				String cpf = votante.getCpf();
 				Integer eleitorid = getEleitorDao().findEleitor(cpf);
@@ -55,13 +65,12 @@ public class VotoService {
 				comprovanteid = geradorComprovante.geradorid();
 				voto.setIdcomprovante(comprovanteid);
 				this.getVotoDao().create(voto);
-			}catch(Exception e){
-				logger.log(Level.SEVERE, e.getMessage(), e);
-				callback.onFailure(e);
-			}finally{
-				candidato = new Candidato();
-				eleitor = new Eleitor();
-			}	
+			}catch(Exception sqle){
+				logger.log(Level.SEVERE, sqle.getMessage(), sqle);
+				callback.onFailure(sqle);
+				throw new ErroEmVotoException("Você já votou");
+			}
+			return "comprovante?faces-redirects=true";
 		}
 
 		public EleitorDao getEleitorDao() {
@@ -80,12 +89,12 @@ public class VotoService {
 			this.usuarioBean = usuarioBean;
 		}
 
-		public PessoaValidaService getPessoaValidaService() {
-			return pessoaValidaService;
+		public VotoValidaService getVotoValidaService() {
+			return votoValidaService;
 		}
 
-		public void setPessoaValidaService(PessoaValidaService pessoaValidaService) {
-			this.pessoaValidaService = pessoaValidaService;
+		public void setVotoValidaService(VotoValidaService votoValidaService) {
+			this.votoValidaService = votoValidaService;
 		}
 
 		public VotoDao getVotoDao() {

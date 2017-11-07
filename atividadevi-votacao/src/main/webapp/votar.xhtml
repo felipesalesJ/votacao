@@ -9,16 +9,20 @@
 	<h:head></h:head> 
 	
 	<body>
-		<!-- <h:form id="formVotar" rendered="#{eleitorLogado != null}"> -->
-			<h:form id="formVotar">
+		<h:form id="formVotar">
 			<p:messages /> 
 				<h:selectOneMenu value="#{votoBean.candidatoid}" id="candidatoIdvalue" >
-					<f:selectItems value="#{candidatoBean.candidatos}" var="candidatoId" itemLabel="#{candidatoId.candidatoId}" itemValue="#{candidatoId.candidatoId}" />
-					<p:ajax event="change"/>
+				<f:selectItem itemValue="0" itemLabel="Selecione"/>
+				<f:selectItems value="#{candidatoBean.candidatos}" var="candidatoId" itemLabel="#{candidatoId.candidatoId}" itemValue="#{candidatoId.candidatoId}" />
+					<f:ajax execute="candidatoIdvalue" render="cSelecionado" listener="#{votoBean.buscaCandidato}"/>
 				</h:selectOneMenu>
-				<br></br>
-				<h:commandButton value="confirma" action="#{votoBean.votar()}" label="submit" style="height:30px" process="@form" update="@form :formVotar"/>
-			
+				<br/>
+				<h:commandButton value="Confirma?" action="#{votoBean.votar()}" label="submit" style="height:30px" process="@form" update="@form :formVotar"/>
+				<h:commandButton value="Voltar" action="menu?faces-redirects=true" style="height:30px" process="@form" update="@form :formMenu"/>
+				<hr/>	
+				<p:outputLabel value="Candidato: "/>			
+				<h:outputLabel id="cSelecionado" value="#{votoBean.candidato.pessoa.nome}"/>
+				
 			</h:form>
 	</body>
 </html>

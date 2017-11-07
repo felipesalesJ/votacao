@@ -26,7 +26,7 @@ public class Candidato implements Serializable{
 	private Integer candidatoId;
 	
 	
-	@OneToOne(fetch = FetchType.EAGER)//(cascade=CascadeType)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "ID_PESSOA")
 	private Pessoa pessoa;
 

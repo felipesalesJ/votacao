@@ -2,9 +2,13 @@ package br.com.atividadevi.Dao;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import org.hibernate.exception.ConstraintViolationException;
+
+import br.com.atividadevi.Modelo.Eleitor;
 import br.com.atividadevi.Modelo.Voto;
 
 @Stateless
@@ -29,5 +33,20 @@ public class VotoDao extends GenericDao<Voto>{
 		.setParameter("idEl", eleitor);
 		Voto resultado = (Voto) query.getSingleResult();
 		return resultado;
+	}
+	
+	public boolean findVotoEleitor(String cpfEleitor) {
+		Query query = em.createQuery("SELECT VT.idvoto "
+					+ "FROM Voto VT "
+					+ "INNER JOIN VT.eleitor EL "
+					+ "INNER JOIN EL.pessoa PE "
+					+ "WHERE PE.cpf = :pCPF")
+		.setParameter("pCPF", cpfEleitor);
+		try{
+			Integer resultado = (Integer) query.getSingleResult();		
+		}catch(Exception nrex){
+			return false;
+		}
+		return true;
 	}
 }

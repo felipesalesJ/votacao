@@ -32,45 +32,6 @@ public class CandidatoService {
 	@EJB
 	private PessoaValidaService pessoaValidaService;
 	
-//	public void gravar(Pessoa pessoa, Candidato candidato, Integer pessoaid, Integer candidatoid){
-//		try{
-//			pessoa.setIdPessoa(0);
-//			candidato.setCandidatoId(0);
-//			this.pessoaDao.create(pessoa);
-//			this.candidatoDao.create(candidato);
-//		}finally{
-//			candidato = new Candidato();
-//			pessoa = new Pessoa();
-//			candidato.setCandidatoId(0);
-//			pessoa.setIdPessoa(0);
-//		}
-//	}
-//	public void gravar(Pessoa pessoa, Candidato candidato, Integer pessoaid, Integer candidatoid, Callback<Pessoa> callback){
-//		try{
-//			create(pessoa, candidato);
-//			callback.onSuccess(pessoa);
-//		}catch(Exception e){
-//			logger.log(Level.SEVERE, e.getMessage(), e);
-//			callback.onFailure(e);
-//		}
-//	}
-//	
-//	public void create(Pessoa pessoa, Candidato candidato){
-//		try{
-//			candidatoValidaService.validaCpf(pessoa);
-//			pessoa.setIdPessoa(0);
-//			candidato.setCandidatoId(0);
-//			candidato.setPessoa(pessoa);
-//			this.pessoaDao.create(pessoa);
-//			this.candidatoDao.create(candidato);
-//		}finally{
-//			candidato = new Candidato();
-//			pessoa = new Pessoa();
-//			candidato.setCandidatoId(0);
-//			pessoa.setIdPessoa(0);
-//		}
-//	}
-	
 	public void gravar(Pessoa pessoa, Candidato candidato, Callback<Pessoa> callback){
 		try{
 			pessoaValidaService.validaCpf(pessoa);
@@ -118,6 +79,11 @@ public class CandidatoService {
 	public List<Candidato> readTodos(){
 		return candidatoDao.readTodos();
 	}
+	
+	public Candidato listarPorId(Candidato candidato,Integer candidatoid){
+		return candidato = this.candidatoDao.buscarPorId(candidatoid);
+	}
+	
 	public PessoaDao getPessoaDao() {
 		return pessoaDao;
 	}
@@ -133,5 +99,6 @@ public class CandidatoService {
 	public void setCandidatoDao(CandidatoDao candidatoDao) {
 		this.candidatoDao = candidatoDao;
 	}
+
 
 }

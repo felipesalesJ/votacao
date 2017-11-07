@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -29,11 +30,11 @@ public class Eleitor implements Serializable{
 	@JoinColumn(name = "ID_PESSOA")
 	private Pessoa pessoa;
 	
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name = "ID_TELEFONE")
 	private Telefone telefone;
 
-	@OneToOne
+	@ManyToOne
 	@JoinColumn(name="ID_ENDERECO")
 	private Endereco endereco;
 	

@@ -5,7 +5,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+
 import br.com.atividadevi.Modelo.Pessoa;
+import br.com.atividadevi.Modelo.Voto;
 
 @Stateless
 public class PessoaDao extends GenericDao<Pessoa>{
@@ -61,10 +63,6 @@ public class PessoaDao extends GenericDao<Pessoa>{
 									+ "WHERE PE.cpf = :pCPF AND PE.datanascimento = :pDATANASCIMENTO")
 			.setParameter("pCPF", pessoa.getCpf())
 			.setParameter("pDATANASCIMENTO", pessoa.getDatanascimento());
-//		if(query != null){
-//			return true;
-//		}
-//		return false;
 		try{
 			Object resultado = query.getSingleResult();		
 		}catch(NoResultException nrex){
@@ -74,4 +72,6 @@ public class PessoaDao extends GenericDao<Pessoa>{
 		}
 		return true;
 	}	
+	
+	
 }

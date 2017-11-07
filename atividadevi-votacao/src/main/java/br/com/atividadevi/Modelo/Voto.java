@@ -23,9 +23,6 @@ public class Voto implements Serializable{
 	@Column(name = "ID_VOTO")
 	private Integer idvoto;
 	
-	
-//	@SequenceGenerator(name="SequenceComprovante", sequenceName="ID_COMPROVANTE_SEQ")
-//	@GeneratedValue(strategy= GenerationType.IDENTITY, generator = "SequenceComprovante")
 	@Column(name="ID_COMPROVANTE")
 	private Integer idcomprovante;
 	
